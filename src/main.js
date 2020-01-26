@@ -3,53 +3,72 @@ const API_URL = "https://api.sheety.co/30b6e400-9023-4a15-8e6c-16aa4e3b1e72";
 
 // Para isso, usaremos o "fetch", conforme você deve ter visto nas aulas online.
 // Corrija a linha abaixo, para que a requisição funcione.
-XMLHttpRequest(API_URI)
-  .then(response => response.text())
+fetch(API_URL)
+  .then(response => response.json())
   .then(result => {
+    // const data = JSON.parse(JSON.stringify(result))
     // Aqui, estamos pegando o resultado da requisição e parseando em JSON, 
     // para que fique mais fácil e amigável, tratarmos esses dados.
-    const data = JSON.parse(result);
 
     // Como é mesmo que percorremos um array? 'hm
-    dados.map(element => {
+    result.map(element => {
       // Desestruture seu objeto, trazendo os seguintes dados:
       // Foto, tipo, nome e preço da propriedade.
-      const { variavel, chave } = data;
+      const {photo, property_type, name, price} = element;
 
       // Pegue a linha do container onde serão exibidos os cards.
-      row = document.pega("linha");
-
+      let row = document.getElementById("row");
+      console.log(row);
       // Agora, crie um elemento "div" com a class "col-md-4" do Bootstrap.
-      div = document.criaElemento("div");
-      div.nomeDaClasse = "col-md-4";
+      let div = document.createElement("div");
+      div.classList.add("col-md-4");
 
       // Boa! Agora, precisamos criar a "div" do card a ser exibido. Ao criar, atribua a class "card mb-4 box-shadow".
-      card = ?
+      // let card = '<div class="card mb-4 box-shadow"> </div>"'
+      let card = document.createElement("div");
+      card.classList.add("card");
+      card.classList.add("mb-4");
+      card.classList.add("box-shadow");
+      
 
       // Humm... Agora que já temos o card, que tal começarmos a popular as informações?
       // Crie um elemento "img" e, atribua a class como "card-img-top";
       // Não se esqueça que sua imagem precisa ser referenciada!
-      image.className = "card-img-top";
-      image.referencia = minhaImagem;
+      let image = document.createElement('img');
+      image.classList.add("card-img-top");
+      image.src = photo;
+
+      // TUDO CERTO ATÉ AQUI! ;)
 
       // Legal! Agora, já podemos começar a construir o "corpo" do card. Bora lá!
       // Obs.: atribua a class "card-body" do Bootstrap, para que fique bonitão. :)
-      cardBody = ?
+      // let cardBody = `<div class="card-body"></div>`
+      let cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      let cbhover = document.createElement("div")
+      cbhover.classList.add("cbhover")
 
       // Beleza, corpo criado. Seguindo nossa estrutura, o próximo elemento seria os textos, para exibir
       // o tipo da propriedade, nome e preço. Mas, antes, vamos criar um elemento "div" para manter isso
       // tudo organizado. Você pode atribuir a class "card-text" do Bootstrap!
-      cardText = ?
+      // let cardText = `<div class="card-text"></div>`
+      let cardText = document.createElement("div");
+      cardText.classList.add("card-text");
 
       // Uffa! Finalmente os elementos da proriedade!
       // Precisamos agora, listar o tipo, o nome e o preço.
-      propertyType = criaParagrafo("p");
+      let propertyType = document.createElement("p");
       propertyType.className = "property-type";
-      propertyType.innerHTML = element;
+      propertyType.innerHTML = property_type;
 
-      propertyName = ?
+      let propertyName = document.createElement("p");
+      propertyName.className = "property-name";
+      propertyName.innerHTML = name;
 
-      propertyPrice = ?
+      let propertyPrice = document.createElement("p");
+      propertyPrice.className = "property-price";
+      propertyPrice.innerHTML = `R$ ${price},00`;
 
       // AOBA! Temos agora, todos os elementos necessários para percorrer a resposta da API e,
       // anexar um ao outro para exibição ao usuário. Para "anexar" os elementos, nós usaremos
@@ -65,8 +84,14 @@ XMLHttpRequest(API_URI)
       //           propertyType
       //           propertyName
       //           propertyPrice
-
       row.appendChild(div);
+      div.appendChild(card);
+      card.appendChild(image);
+      card.appendChild(cardBody);
+      cardBody.appendChild(cardText);
+        cardText.appendChild(propertyType);
+        cardText.appendChild(propertyName);
+        cardText.appendChild(propertyPrice);
       // [ ... ]
     });
   });
